@@ -1,0 +1,80 @@
+﻿
+@model WebUI.Models.SignUpViewModel
+
+@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html class="h-100">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HomeDraw - Sign Up</title>
+</head>
+<body class="h-100" style="background-image: url('../../Content/Backgrounds/JapanBackground.jpg');">
+
+    <div class="text-center text-white d-flex h-100">
+        <div class="container justify-content-center align-self-center">
+
+            <div class="col-md-6 mx-auto mt-5">
+                @using (Html.BeginForm("SignUp", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="card text-white blurred cardBorderCustom">
+                        <div class="card-header cardHeaderCustom">
+                            <h5 class="lead text-white" style="font-size:x-large">Sign Up to Home Draw</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-text">
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <label>First Name</label>
+                                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control textBoxCustom" })
+                                    </div>
+                                    <div class="col text-left">
+                                        <label>Last Name</label>
+                                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control textBoxCustom" })
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col text-left">
+                                        <label>Username</label>
+                                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control textBoxCustom" })
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col text-left">
+                                        <label>Password</label>
+                                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control textBoxCustom" })
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col text-left">
+                                        <label>Email</label>
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control textBoxCustom" })
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-block btn-outline-info navButtonsNormal" style="border-radius:1px;">Sign Up</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+</body>
+</html>
+

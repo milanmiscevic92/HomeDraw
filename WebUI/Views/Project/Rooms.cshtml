@@ -1,0 +1,224 @@
+﻿@model WebUI.Models.CreateOrJoinProjectViewModel
+
+@{
+    ViewBag.Title = "Home Draw - Rooms";
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html class="h-100">
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>HomeDraw - Dashboard</title>
+</head>
+<body class="h-100" style="background-image: url('../../Content/Backgrounds/CityBackground.jpg');">
+
+
+
+    <div class="row text-center">
+        <div class="col text-center">
+            <p class="lead text-white-50" style="font-size:x-large; margin-top:5%;">
+                Click on Join button to join an existing project. Otherwise, click add to create a new room.
+            <p style="display:inline;">
+                <button data-toggle="modal" data-target="#AddNewRoomModal" type="button" class="btn btn-outline-info my-2 my-sm-0 navButtonsNormal">Add Room</button>
+            </p>
+            </p>
+            @if (Model.AvailableProjects.Any())
+            {
+                <h3 class="text-white  mt-5">List of projects that you can join:</h3>
+            }
+        </div>
+    </div>
+
+
+    <!-- BEGINNING OF 3 CARD ROW -->
+    <div id="card-deck" class="card-deck" style="margin-top:15px; margin-bottom:25px;">
+        @foreach (var p in Model.AvailableProjects)
+        {
+            if (p != null)
+            {
+                <div class="col-md-4" style="margin-top:25px;">
+                    <div class="card blurred blurredBorder ">
+                        <img class="card-img-top" src="~/Content/Backgrounds/JapanBackground.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Name: @p.ProjectName</h5>
+                            <p class="card-text text-center">Description: @p.ProjectDescription</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <small class="text-muted">
+                                @Html.ActionLink("Join Project", "JoinProject", "Project", new { p.ProjectID }, new { @class = "btn btn-outline-info my-2 my-sm-0 navButtonsNormal", @style = "margin:10px;" })
+                            </small>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <!-- END OF 3 CARD ROW -->
+
+
+    <div class="row mt-5">
+        <div class="col text-center  mt-5">
+            @if(Model.JoinedProjects.Any())
+            {
+            <h3 class="text-white"> List of projects that you participate in: </h3>
+            }
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="card-deck" style="margin-top:15px; margin-bottom:25px;">
+            @foreach (var p in Model.JoinedProjects)
+            {
+                if (p != null)
+                {
+                    <div class="col-md-4" style="margin-top:25px;">
+                        <div class="card blurred blurredBorder ">
+                            <img class="card-img-top" src="~/Content/Backgrounds/JapanBackground.jpg" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Name: @p.ProjectName</h5>
+                                <p class="card-text text-center">Description: @p.ProjectDescription</p>
+                            </div>
+                            <div class="card-footer text-center">
+                                <small class="text-muted">
+                                    @Html.ActionLink("Open Project", "OpenProject", "Project", new { p.ProjectID }, new { @class = "btn btn-outline-info my-2 my-sm-0 navButtonsNormal" })
+                                </small>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+                </div>
+    </div>>
+        <!-- ADD NEW ROOM MODAL START -->
+        <div class="modal fade" id="AddNewRoomModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content  modalLook">
+                    <div class="modal-header modalHeaderBorderRemover">
+                        <h5 class="modal-title" id="exampleModalLabel">Enter Room Details:</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" style="color:#808080;">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12 text-left">
+                                <label>Project (Room) Name</label>
+                                <input type="text" name="AddNewRoomName" id="AddNewRoomName" class="form-control textBoxCustom" style="color:black;" />
+                            </div>
+                            <div class="col-md-12 text-left mt-3">
+                                <label>Description</label>
+                                <textarea type="text" name="AddNewRoomDescription" id="AddNewRoomDescription" class="form-control" rows="5" style="resize:none;"> </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer modalFooterBorderRemover">
+                        <button type="button" class="btn btn-outline-dark my-2 my-sm-0" data-dismiss="modal" style="border-radius:1px;">Close</button>
+                        <button data-dismiss="modal" id="AddNewRoomSubmitButton" type="button" class="btn btn-outline-dark my-2 my-sm-0" style="border-radius:1px;">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ADD NEW ROOM MODAL ENDING -->
+        <!--------------------------------------------------SIGNALR SCRIPTS --------------------------------------------------------------->
+        <!----------ADD NEW ROOM ---------->
+        <script>
+        $(function () {
+
+
+            // Callback
+            $.connection.serverHub.client.createProjectCallback = function (projectName, projectDescription, projectId) {
+                // Add new room to the page
+
+
+
+                var div1 = $('<div></div>', {
+                    style: 'margin-top:25px;',
+                    class: 'col-md-4'
+                });
+
+                $('#card-deck').append(div1);
+
+                var div2 = $('<div></div>', {
+                    class: 'card blurred blurredBorder'
+                });
+
+                div1.append(div2);
+
+
+
+                var img = $('<img></img>', {
+                    class: 'card-img-top',
+                    src: "/Content/Backgrounds/JapanBackground.jpg"
+
+                });
+
+                div2.append(img);
+
+                var div3 = $('<div></div>', {
+                    class: 'card-body'
+                });
+
+                div2.append(div3);
+
+                var h5 = $('<h5></h5>', {
+                    class: 'card-title text-center',
+                    text: 'Name: ' + projectName
+                });
+
+
+                var p = $('<p></p>', {
+                    class: 'card-text text-center',
+                    text: 'Description: ' + projectDescription
+                });
+
+                div3.append(h5);
+                div3.append(p);
+
+
+                var div4 = $('<div></div>', {
+                    class: 'card-footer text-center'
+                });
+
+                div2.append(div4);
+
+
+
+                var small = $('<small></small>', {
+                    class: 'text-muted'
+                });
+
+                div4.append(small);
+
+                var input = $('<input></input>', {
+                    type: 'submit',
+                    value: 'Join Project',
+                    class: 'btn btn-outline-info my-2 my-sm-0 navButtonsNormal'
+                });
+
+                small.append(input);
+
+            };
+
+            // Start the connection
+            $.connection.hub.start().done(function () {
+                $('#AddNewRoomSubmitButton').click(function () {
+                    // Call the CreateProject method on the hub
+                    $.connection.serverHub.server.createProject($("#AddNewRoomName").val(), $("#AddNewRoomDescription").val(), $("#AddNewRoomPassword").val(), "@Model.UserId");
+                });
+            });
+        });
+        </script>
+
+
+
+
+
+
+</body>
+</html>

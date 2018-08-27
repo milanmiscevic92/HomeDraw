@@ -1,0 +1,33 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="~/Scripts/jquery-3.0.0.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.1.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/two.js"></script>
+    <script src="~/Scripts/TwoJsMain.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/CustomStyle.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light  blurred">
+        @Html.ActionLink("HomeDraw", "Index", "MainDashboard", null, new { @class = "navbar-brand", @style = "color:white; font-weight:bold; font-size:x-large;" })
+
+        <form class="form-inline my-2 my-lg-0 ml-auto">
+            @Html.ActionLink(User.Identity.Name, "Settings", "Account", null, new { @class = "btn btn-outline-info my-2 my-sm-0 navButtonsTransparent", @style = "margin-right:10px;" })
+            @Html.ActionLink("Log Out", "LogOut", "Account", null, new { @class = "btn btn-outline-info my-2 my-sm-0 navButtonsNormal" })
+        </form>
+    </nav>
+
+    <div class="container body-content h-75">
+        @RenderBody()
+    </div>
+
+</body>
+</html>

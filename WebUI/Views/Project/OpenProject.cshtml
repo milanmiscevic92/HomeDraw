@@ -1,0 +1,252 @@
+﻿@model WebUI.Models.OpenProjectViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="~/Scripts/jquery-3.0.0.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.1.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/two.js"></script>
+    <script src="~/Scripts/TwoJsMain.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/CustomStyle.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>OpenProject</title>
+</head>
+<body style="height:100vh;">
+    <div class="container-fluid" style="height:100%; padding-left:0px; padding-right:0px;">
+        <div class="row" style="height:100%; margin-right: 0px; margin-left: 0px;">
+            <!-- TOP HEADING COLUMN -->
+            <div class="col-md-12 text-center mt-2" style="border-bottom:1px solid lightgray;">Drawing Surface</div>
+
+
+
+            <!-- DRAWING AREA START -->
+            <div id="drawingArea" class="col-md-12" style="height:80%; border-bottom:1px solid lightgray;">
+
+            </div>
+            <!-- DRAWING AREA ENDING -->
+            <!-- BUTTONS COLUMN -->
+            <div class="col-md-12" style="vertical-align:bottom;">
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group mr-auto ml-auto" role="group" aria-label="First group">
+                        <button id="CreateBathButton" type="button" class="btn btn-info">Bath</button>
+                        <button id="CreateLavatoryButton" type="button" class="btn btn-info">Lavatory</button>
+                        <button id="CreateShowerButton" type="button" class="btn btn-info">Shower</button>
+                        <button id="CreateDoorButton" type="button" class="btn btn-info">Door</button>
+                        <button id="CreateWallButton" type="button" class="btn btn-info">Wall</button>
+                        <button id="CreateWindowButton" type="button" class="btn btn-info">Window</button>
+                        <button id="CreateRefrigeratorButton" type="button" class="btn btn-info">Refrigerator</button>
+                        <button id="CreateSinkButton" type="button" class="btn btn-info">Sink</button>
+                        <button id="CreateStoveButton" type="button" class="btn btn-info">Stove</button>
+                        <button id="CreateSofaButton" type="button" class="btn btn-info">Sofa</button>
+                        <button id="CreateTableButton" type="button" class="btn btn-info">Table</button>
+                        <button class="btn btn-success">Save Drawing</button>
+                        @Html.ActionLink("Exit Room", "CreateOrJoinProject", "Project", null, new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- ==============================SCRIPTS ===================================-->
+    <!-- DRAW BATH -->
+    <script>
+        $(function () {
+
+
+            // Callback
+            $.connection.serverHub.client.createBathCallback = function (bathSize, bathId) {
+
+                var x = bathSize;
+                var y = x / 2;
+
+                // Create DIV that cotains bath element
+                var bathDiv = $('<div></div>', {
+                    style: 'width: ' + x + 'px; height: ' + y + 'px;',
+                    id: bathId + 'bath',
+                });
+
+                $('#drawingArea').append(bathDiv.draggable({
+                    containment: "parent",
+                    drag: function () {
+                        bath = $("#" + bathId + 'bath').offset();
+                        $.connection.serverHub.server.updateBath(bath, bathId);
+                    }
+                }));
+
+
+                var elem = document.getElementById(bathId + 'bath');
+                var two = new Two({ height: y, width: x }).appendTo(elem);
+
+
+                var bathOuterRectangle = two.makeRectangle(0, 0, x, y);
+                var bathInnerRoundedRectangle = two.makeRoundedRectangle(0, 0, x / 1.05, y / 1.111, 14);
+
+                bathOuterRectangle.linewidth = 3;
+                bathInnerRoundedRectangle.linewidth = 2;
+
+                var bathInnerOuter = two.makeGroup(bathOuterRectangle, bathInnerRoundedRectangle);
+
+                bathInnerOuter.translation.set(two.width / 2, two.height / 2);
+
+                var bathTapTop = two.makeCircle(0, -x / 20, x / 20);
+                var bathTapBottom = two.makeCircle(0, x / 20, x / 20);
+                var bathTapRectangle = two.makeRectangle(x / 16, 0, x / 4.4, y / 10);
+
+                var bathTap = two.makeGroup(bathTapTop, bathTapBottom, bathTapRectangle);
+
+                bathTap.translation.set(two.width / 2 - bathOuterRectangle.height, two.height / 2);
+
+                two.update();
+
+
+            };
+
+            // Start the connection
+            $.connection.hub.start().done(function () {
+                $('#CreateBathButton').click(function () {
+                    // Call the CreateProject method on the hub
+                    $.connection.serverHub.server.createBath(@Model.Project.ProjectID);
+                });
+            });
+        });
+    </script>
+
+
+    <!-- UPDATE BATH -->
+
+
+    <script>
+        $(function () {
+            var moveBathHub = $.connection.serverHub;
+            moveBathHub.client.updateBath = function (model, bathId) {
+                // bath = model;
+                $("#" + bathId + 'bath').css({ left: model.left, top: model.top });
+            };
+        });
+
+    </script>
+
+
+
+
+
+
+
+
+    <!-- ===== LAVATORY ===== -->
+    <!-- draw lavatory -->
+    <script>
+        $(function () {
+
+
+            // Callback
+            $.connection.serverHub.client.createLavatoryCallback = function (lavatorySize, lavatoryId) {
+
+                var x = lavatorySize;
+                var y = x / 1.215;
+
+                // Create DIV that cotains bath element
+                var lavatoryDiv = $('<div></div>', {
+                    style: 'width: ' + x + 'px; height: ' + y + 'px;',
+                    id: lavatoryId + 'lavatory',
+                });
+
+
+                // Append to drawing area and send to serverHub -> updateBath
+                $('#drawingArea').append(lavatoryDiv.draggable({
+                    containment: "parent",
+                    drag: function () {
+                        lavatory = $("#" + lavatoryId + 'lavatory').offset();
+                        $.connection.serverHub.server.updateLavatory(lavatory, lavatoryId);
+                    }
+                }));
+
+                // TWO.JS that actually draws a svg
+                var elem = document.getElementById(lavatoryId + 'lavatory');
+                var two = new Two({ height: y, width: x }).appendTo(elem);
+
+                var lavatoryOuterPath = two.makePath(-x / 2.025, 0, -x / 2.025, y / 2.5, x / 2.025, y / 2.5, x / 2.025, 0, x / 2.025, -y / 3.333, x / 4.05, -y / 2, -x / 4.05, -y / 2, -x / 2.025, -y / 3.333);
+                var lavatoryInnerEllipse = two.makeEllipse(0, 0, x / 2.43, y / 2.85714285714);
+                var lavatoryInnerOuter = two.makeGroup(lavatoryOuterPath, lavatoryInnerEllipse);
+
+                lavatoryInnerOuter.translation.set(two.width / 2, two.height / 2);
+
+                lavatoryOuterPath.linewidth = 3;
+                lavatoryOuterPath.linewidth = 3;
+                lavatoryInnerEllipse = 2;
+
+                var lavatoryTapTop = two.makeCircle(-x / 8.86, -x / 16, x / 24.3, 12);
+                var lavatoryTapBottom = two.makeCircle(-x / 8.86, x / 16, x / 24.3, 12);
+                var lavatoryTapRectangle = two.makeRectangle(-x / 13.84375, 0, x / 5.4, y / 20);
+
+
+                var lavatoryTap = two.makeGroup(lavatoryTapTop, lavatoryTapBottom, lavatoryTapRectangle);
+
+                lavatoryTap.fill = 'grey';
+                lavatoryTap.translation.set(two.width / 2, two.height / 2 + y / 4);
+                lavatoryTap.rotation = -Math.PI / 2;
+
+
+
+                two.update();
+
+            };
+
+            // Start the connection
+            $.connection.hub.start().done(function () {
+                $('#CreateLavatoryButton').click(function () {
+                    // Call the CreateBath method on the hub
+                    $.connection.serverHub.server.createLavatory(@Model.Project.ProjectID);
+                });
+            });
+
+        });
+    </script>
+    <!-- update lavatory -->
+    <script>
+        $(function () {
+            var moveLavatoryHub = $.connection.serverHub;
+
+            moveLavatoryHub.client.updateLavatory = function (model, lavatoryId) {
+               // lavatory = model;
+                $("#" + lavatoryId + 'lavatory').css({ left: model.left, top: model.top });
+            };
+        });
+
+    </script>
+
+
+
+
+
+
+
+
+</body>
+</html>

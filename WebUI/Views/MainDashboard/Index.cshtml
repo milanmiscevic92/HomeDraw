@@ -1,0 +1,84 @@
+﻿@model WebUI.Models.MainDashboardViewModel
+@{
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html class="h-100">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HomeDraw - Dashboard</title>
+</head>
+<body class="h-100" style="background-image: url('../../Content/Backgrounds/CityBackground.jpg');">
+
+    <div class="row h-100">
+        <div class="text-center text-white d-flex h-100">
+            <div class="container justify-content-center align-self-center">
+                <h2>Welcome!</h2>
+                <p class="lead text-white-50" style="font-size:x-large;">
+                    Use "Create New / Join Existing" button to create a new room or join an existing project to work with other users.
+                </p>
+                <p style="display:inline;">
+                    @Html.ActionLink("Create New / Join Existing", "CreateOrJoinProject", "Project", null, new { @class = "btn btn-outline-info my-2 my-sm-0 navButtonsNormal", @style = "margin:10px;" })
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="col text-center">
+            @if (Model.MyProjects.Any())
+            {
+                <h3 class="text-white">My Projects:</h3>
+            }
+        </div>
+    </div>
+
+    <!-- BEGINNING OF 3 CARD ROW -->
+    <div class="card-deck" style="margin-top:25px; margin-bottom:25px;">
+        @foreach (var p in Model.MyProjects)
+        {
+            if (p != null)
+            {
+                <div class="col-md-4" style="margin-top:25px;">
+                    <div class="card blurred blurredBorder ">
+                        <img class="card-img-top" src="~/Content/Backgrounds/JapanBackground.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.ActionLink(p.ProjectName, "OpenProject", "Project", new { p.ProjectID }, new { @class = "actionLinkCustom" }) </h5>
+                            <p class="card-text">@p.ProjectDescription</p>
+                        </div>
+                        <div class="card-footer text-right">
+                            <small class="text-muted">
+                                @using (Html.BeginForm("DeleteProject", "Project"))
+                                {
+                                    @Html.Hidden("ProjectId", p.ProjectID)
+
+                                    <input type="submit" value="Delete" class="btn btn-sm btn-outline-dark  navButtonsNormal" />
+
+                                }
+                            </small>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+
+
+
+
+
+    </div>
+    <!-- END OF 3 CARD ROW -->
+
+
+   
+
+   
+
+
+
+</body>
+</html>

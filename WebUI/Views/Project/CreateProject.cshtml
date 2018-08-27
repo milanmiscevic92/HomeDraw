@@ -1,0 +1,57 @@
+﻿@model WebUI.Models.CreateProjectViewModel
+
+@{
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html class="h-100">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HomeDraw - Create Project</title>
+</head>
+<body class="h-100" style="background-image: url('../../Content/Backgrounds/CityBackground.jpg');">
+
+    <div class="text-center text-white d-flex h-100">
+        <div class="container justify-content-center align-self-center">
+
+            <div class="col-md-6 mx-auto mt-5">
+                @using (Html.BeginForm("CreateProject", "Project", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="card text-white blurred cardBorderCustom">
+                        <div class="card-header cardHeaderCustom">
+                            <h5 class="lead text-white" style="font-size:x-large">Create New Project</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-text">
+                                <div class="row">
+                                    <div class="col-md-12 text-left">
+                                        <label>Project Name</label>
+                                        @Html.TextBoxFor(m => m.Project.ProjectName, new { @class = "form-control textBoxCustom" })
+                                    </div>
+                                    <div class="col-md-12 text-left mt-3">
+                                        <label>Description</label>
+                                        @Html.TextAreaFor(m => m.Project.ProjectDescription, new { @class = "form-control", @rows = 5, @style = "resize:none;"})
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-block btn-outline-info navButtonsNormal" style="border-radius:1px;">Create</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+
+  
+
+
+
+
+</body>
+</html>

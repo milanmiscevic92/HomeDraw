@@ -1,0 +1,128 @@
+﻿body {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.blurred {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    border-bottom: none;
+}
+
+.blurredBorder
+{
+    border-width:0px;
+    border-radius:2px;
+}
+
+    .blurredBorder:hover {
+        
+        
+        background-color: rgba(0, 0, 0, 0.5);
+        transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        
+    }
+
+.navButtonsTransparent
+{
+    border:none;
+    font-weight:bold;
+    color:white;
+    font-size:large;
+}
+
+
+.navButtonsNormal
+{
+    border-color:white;
+    background-color:white;
+    color:#808080;
+    font-weight:bold;
+    font-size:large;
+}
+
+.textBoxCustom
+{
+    border-width:0px;
+    border-bottom-width:2px;
+    border-radius:0px;
+    background-color:Rgba(255,255,255,0);
+    color:white;
+}
+
+.textBoxCustom:focus
+{
+        border-width: 0px;
+        border-bottom-width: 2px;
+        border-radius: 0px;
+        background-color: transparent;
+        box-shadow: none;
+        color:white;
+}
+
+.textBoxCustom:hover 
+{
+    color:white;
+        border-width: 0px;
+        border-bottom-width: 2px;
+        border-radius: 0px;
+        background-color: Rgba(255,255,255,0);
+        border-color: #17a2b8;
+        box-shadow:none;
+}
+
+.cardHeaderCustom
+{
+    border-bottom-width:0px;
+    background-color:transparent;
+    text-align:center;
+}
+
+.cardBorderCustom
+{
+    border-color:rgba(255,255,255,0.1);
+    border-radius:1px;
+}
+
+.userSettingsLine {
+
+    margin-top:12px;
+    border-bottom:2px solid rgba(255,255,255,0.5);
+}
+
+.userSettingsLine:hover 
+{
+        margin-top: 12px;
+        border-bottom: 2px solid #17a2b8;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+}
+
+.modalLook {
+    background-color: white;
+    color: #808080;
+    border-radius:1px;
+}
+
+.modalHeaderBorderRemover
+{
+    border-bottom-width:0px;
+}
+
+.modalFooterBorderRemover
+{
+    border-top-width:0px;
+}
+
+a.actionLinkCustom:hover {
+    color: #17a2b8;
+}
+
+a.actionLinkCustom
+{
+    color:white;
+    text-decoration:none;
+}
+
+

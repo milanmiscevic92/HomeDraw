@@ -1,0 +1,188 @@
+﻿@model WebUI.Models.AccountSettingsViewModel
+
+@{
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html class="h-100">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HomeDraw - Account Settings</title>
+</head>
+<body class="h-100" style="background-image: url('../../Content/Backgrounds/CityBackground.jpg');">
+
+    <div class="text-center text-white d-flex h-100">
+        <div class="container justify-content-center align-self-center">
+
+            <div class="col-md-6 mx-auto mt-5">
+               
+                    <div class="card text-white blurred cardBorderCustom">
+                        <div class="card-header cardHeaderCustom">
+                            <h5 class="lead text-white" style="font-size:x-large">Account Settings</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-text">
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <label>First Name</label>
+                                        <div class="userSettingsLine" data-toggle="modal" data-target="#firstNameModal">
+                                            @Model.FirstName
+                                        </div>
+                                    </div>
+                                    <div class="col text-left">
+                                        <label>Last Name</label>
+                                        <div class="userSettingsLine" data-toggle="modal" data-target="#lastNameModal">
+                                            @Model.LastName
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row mt-3">
+                                    <div class="col text-left">
+                                        <label>Email</label>
+                                        <div class="userSettingsLine" data-toggle="modal" data-target="#emailModal">
+                                            @Model.Email
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col text-left">
+                                        <label>Username</label>
+                                        <div class="userSettingsLine">
+                                            @Model.Username
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col text-center" style="margin-top:20px;">
+                                        <p class="btn btn-outline-info my-2 my-sm-0 navButtonsNormal" data-toggle="modal" data-target="#passwordModal">Change Password</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+               
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FIRST NAME MODAL -->
+ 
+    <div class="modal fade" id="firstNameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content  modalLook">
+                <div class="modal-header modalHeaderBorderRemover">
+                    <h5 class="modal-title" id="exampleModalLabel">Enter Your First Name:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color:#808080;">&times;</span>
+                    </button>
+                </div>
+                @using (Html.BeginForm("ChangeFirstName", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="modal-body">
+                        @Html.TextBoxFor(m => m.NewFirstName, new { @class = "form-control textBoxCustom", @style = "border-bottom-width:1px; border-bottom-color:#808080; color:#808080; font-weight:bold;" })
+                    </div>
+                    <div class="modal-footer modalFooterBorderRemover">
+                        <button type="button" class="btn btn-outline-dark my-2 my-sm-0" data-dismiss="modal" style="border-radius:1px;">Close</button>
+                        <button type="submit" class="btn btn-outline-dark my-2 my-sm-0" style="border-radius:1px;">Save changes</button>
+                    </div>
+                }
+                </div>
+        </div>
+    </div>
+    <!-- FIRST NAME MODAL ENDING -->
+    <!-- LAST NAME MODAL -->
+    <div class="modal fade" id="lastNameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content  modalLook">
+                <div class="modal-header modalHeaderBorderRemover">
+                    <h5 class="modal-title" id="exampleModalLabel">Enter Your Last Name:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color:#808080;">&times;</span>
+                    </button>
+                </div>
+                @using (Html.BeginForm("ChangeLastName", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="modal-body">
+                        @Html.TextBoxFor(m => m.NewLastName, new { @class = "form-control textBoxCustom", @style = "border-bottom-width:1px; border-bottom-color:#808080; color:#808080; font-weight:bold;" })
+                    </div>
+                    <div class="modal-footer modalFooterBorderRemover">
+                        <button type="button" class="btn btn-outline-dark my-2 my-sm-0" data-dismiss="modal" style="border-radius:1px;">Close</button>
+                        <button type="submit" class="btn btn-outline-dark my-2 my-sm-0" style="border-radius:1px;">Save changes</button>
+                    </div>
+                }
+                </div>
+        </div>
+    </div>
+    <!-- LAST NAME MODAL ENDING -->
+    <!-- EMAIL MODAL -->
+    <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content  modalLook">
+                <div class="modal-header modalHeaderBorderRemover">
+                    <h5 class="modal-title" id="exampleModalLabel">Enter Your Email Address:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color:#808080;">&times;</span>
+                    </button>
+                </div>
+                @using (Html.BeginForm("ChangeEmailAddress", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="modal-body">
+                        @Html.TextBoxFor(m => m.NewEmail, new { @class = "form-control textBoxCustom", @style = "border-bottom-width:1px; border-bottom-color:#808080; color:#808080; font-weight:bold;" })
+                    </div>
+
+                    <div class="modal-footer modalFooterBorderRemover">
+                        <button type="button" class="btn btn-outline-dark my-2 my-sm-0" data-dismiss="modal" style="border-radius:1px;">Close</button>
+                        <button type="submit" class="btn btn-outline-dark my-2 my-sm-0" style="border-radius:1px;">Save changes</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- EMAIL MODAL ENDING -->
+    <!-- PASSWORD MODAL -->
+    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content  modalLook">
+                <div class="modal-header modalHeaderBorderRemover">
+                    <h5 class="modal-title" id="exampleModalLabel">Change Your Password:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color:#808080;">&times;</span>
+                    </button>
+                </div>
+                @using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="modal-body">
+                        <div>
+                            <label>Old Password</label>
+                            @Html.TextBoxFor(m => m.OldPassword, new { @class = "form-control textBoxCustom", @style = "border-bottom-width:1px; border-bottom-color:#808080; color:#808080; font-weight:bold;" })
+                        </div>
+
+                        <div style="margin-top:10px;">
+                            <label>New Password</label>
+                            @Html.TextBoxFor(m => m.NewPassword, new { @class = "form-control textBoxCustom", @style = "border-bottom-width:1px; border-bottom-color:#808080; color:#808080; font-weight:bold;" })
+                        </div>
+                    </div>
+                    <div class="modal-footer modalFooterBorderRemover">
+                        <button type="button" class="btn btn-outline-dark my-2 my-sm-0" data-dismiss="modal" style="border-radius:1px;">Close</button>
+                        <button type="submit" class="btn btn-outline-dark my-2 my-sm-0" style="border-radius:1px;">Save changes</button>
+                    </div>
+                }
+                </div>
+        </div>
+    </div>
+    <!-- PASSWORD MODAL ENDING -->
+
+
+
+</body>
+</html>
