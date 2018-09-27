@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,15 @@ namespace Domain.Entities.ConstructionElements
 {
     public class Window
     {
+        [JsonProperty("windowId")]
         public int WindowId { get; set; }
 
-        public float WindowWidthX { get; set; }
-        public float WindowWidthY { get; set; }
+        [JsonProperty("windowSize")]
+        public float WindowSize { get; set; }
 
+        [JsonProperty("left")]
         public float WindowPositionX { get; set; }
+        [JsonProperty("top")]
         public float WindowPositionY { get; set; }
 
         public int ProjectId { get; set; }

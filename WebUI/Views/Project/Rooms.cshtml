@@ -24,7 +24,7 @@
             <p style="display:inline;">
                 <button data-toggle="modal" data-target="#AddNewRoomModal" type="button" class="btn btn-outline-info my-2 my-sm-0 navButtonsNormal">Add Room</button>
             </p>
-            </p>
+            @*</p>*@
             @if (Model.AvailableProjects.Any())
             {
                 <h3 class="text-white  mt-5">List of projects that you can join:</h3>
@@ -135,7 +135,7 @@
             $.connection.serverHub.client.createProjectCallback = function (projectName, projectDescription, projectId) {
                 // Add new room to the page
 
-
+                
 
                 var div1 = $('<div></div>', {
                     style: 'margin-top:25px;',
@@ -196,12 +196,16 @@
                 div4.append(small);
 
                 var input = $('<input></input>', {
-                    type: 'submit',
+                    type: 'button',
                     value: 'Join Project',
-                    class: 'btn btn-outline-info my-2 my-sm-0 navButtonsNormal'
+                    class: 'btn btn-outline-info my-2 my-sm-0 navButtonsNormal',
+                    onclick: "location.href='@Url.Action("JoinProject", "Project")?ProjectID=" + projectId + "'"
                 });
 
                 small.append(input);
+
+
+                 
 
             };
 

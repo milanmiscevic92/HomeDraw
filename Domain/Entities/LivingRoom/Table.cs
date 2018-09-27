@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Domain.Entities.LivingRoom
 {
     public class Table
     {
+        [JsonProperty("tableId")]
         public int TableId { get; set; }
 
-        public float TableWidthX { get; set; }
-        public float TableWidthY { get; set; }
+        [JsonProperty("tableSize")]
+        public float TableSize { get; set; }
 
+        [JsonProperty("left")]
         public float TablePositionX { get; set; }
+        [JsonProperty("top")]
         public float TablePositionY { get; set; }
 
         public int ProjectId { get; set; }
