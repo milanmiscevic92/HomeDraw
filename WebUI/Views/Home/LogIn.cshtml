@@ -19,6 +19,7 @@
             <div class="col-md-6 mx-auto mt-5">
                 @using (Html.BeginForm("LogIn", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
+                
                     <div class="card text-white blurred cardBorderCustom">
                         <div class="card-header cardHeaderCustom">
                             <h5 class="lead text-white" style="font-size:x-large">Home Draw - Log In</h5>
@@ -29,6 +30,9 @@
                                     <div class="col text-left">
                                         <label>Username</label>
                                         @Html.TextBoxFor(m => m.Username, new { @class = "form-control textBoxCustom" })
+                                        <div class="text-center text-danger mt-1">
+                                            @Html.ValidationMessageFor(v => v.Username)
+                                        </div>
                                     </div>
 
                                 </div>
@@ -37,11 +41,17 @@
                                     <div class="col text-left">
                                         <label>Password</label>
                                         @Html.TextBoxFor(m => m.Password, new { @class = "form-control textBoxCustom" })
+                                        <div class="text-center text-danger mt-1">
+                                            @Html.ValidationMessageFor(v => v.Password)
+                                        </div>
                                     </div>
                                 </div>
 
                             </div>
                             <div class="mt-4">
+                                <div class="text-center text-danger mt-1">
+                                    @ViewBag.AuthenticationError
+                                </div>
                                 <button type="submit" class="btn btn-block btn-outline-info navButtonsNormal">Log In</button>
                             </div>
                         </div>

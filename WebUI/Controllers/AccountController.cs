@@ -191,7 +191,9 @@ namespace WebUI.Controllers
 
                 if(user == null)
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    //ModelState.AddModelError("", "Invalid username or password.");
+                    ViewBag.AuthenticationError = "Invalid uername or password.";
+
                 }
 
                 else
@@ -203,7 +205,7 @@ namespace WebUI.Controllers
                 }
             }
 
-            return View(vm);
+            return View("~/Views/Home/LogIn.cshtml", vm);
         }
 
         public ActionResult LogOut()
